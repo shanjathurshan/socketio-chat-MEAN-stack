@@ -1,5 +1,5 @@
 <p>chat-screen works!</p>
-
+my name - {{username}} / {{mySocketIdLocal}}
 <div class="container">
     <div class="row pb-3">
         <div class="col-md-4">
@@ -16,27 +16,51 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="card m-0 p-2  col-md-8">
-            <div *ngFor="let item of messageArray">
-                <span style="font-size: 13px;"> <strong>{{item.username}} : </strong>{{item.message}} </span>
+    <div class="row px-3 ">
+        <div class="col">
+            <div class="card m-0 p-2  ">
+                <h4>Group chat</h4>
+                <div *ngFor="let item of messageArray">
+                    <span style="font-size: 13px;"> <strong>{{item.username}} : </strong>{{item.message}} </span>
+                </div>
+            </div>
+    
+            <hr>
+    
+            <div class="card m-0 p-2  mt-2 ">
+                <h4>Private chat</h4>
+                <div *ngFor="let item of messagePrivateArray">
+                    <span style="font-size: 13px;"> <strong>{{item.sender}} : </strong>{{item.message}} </span>
+                </div>
+            </div>
+<hr>
+            <div class="card m-0 p-2  mt-2 ">
+                <h4>Private chat from backend</h4>
+                <div *ngFor="let item of messagePrivateArrayFromBackend">
+                    <span style="font-size: 13px;"> <strong>{{item.sender}} : </strong>{{item.message}} </span>
+                </div>
             </div>
         </div>
+
         <div class="card m-0 p-2 col-md-4">
             <div *ngFor="let item of userArray">
-                <span style="font-size: 13px;"> <strong>{{item.username}} : </strong>{{item.id}} - 
+                <span style="font-size: 13px;" (click)="onSelectUser(item)" > <strong>{{item.username}} : </strong>{{item.id}} - 
                     <span class="{{item.online == true ? 'Online' : 'Offline' }}">{{item.online == true ? 'Online' : 'Offline' }}</span>
                  </span>
             </div>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row pt-3">
         <div class="col-md-4">
             <input type="text" [(ngModel)]="chat" placeholder="Chat here" class="form-control">
         </div>
-        <div class="col-md-4">
+        <div class="col-md-2">
             <button (click)="sendMessage()" class="btn btn-primary">Send</button>
         </div>
+        <div class="col-md-4">
+            <button (click)="sendMessagePrivateUser()" class="btn btn-primary">Send private message</button>
+        </div>
+
     </div>
 </div>
