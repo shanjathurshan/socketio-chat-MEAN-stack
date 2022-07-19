@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { SocketService } from '../socket/socket.service';
 
@@ -22,7 +23,7 @@ export class ChatScreenComponent implements OnInit {
   messagePrivateArrayFromBackend : Array<{sender: String, receiver: string, message: String }> = [];
   userArray: Array<{username: String, id: String, online: boolean }> = [];
 
-  constructor(private socketSerive: SocketService) { 
+  constructor(private socketSerive: SocketService, private http: HttpClient) { 
     this.socketSerive.listen('new user').subscribe( (res: any) =>{
       console.log(res);
       this.messageArray.push(res);
@@ -98,6 +99,11 @@ export class ChatScreenComponent implements OnInit {
   onSelectUser(data: any){
     console.log(data);
     this.receiver = data.username;
+
+    this.http.get<any>(`http://localhost:3000/get_messages/${this.receiver}/${this.sender}`).subscribe(data => {
+      console.log(data);
+      this.messagePrivateArray = data;
+    })
   }
 
 }
