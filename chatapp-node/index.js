@@ -7,6 +7,8 @@ const io = new Server(server, {
     cors: {origin: '*'}
 });
 const mysql = require('mysql');
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded())
 
 const connection =  mysql.createConnection({
     "host": "localhost",
@@ -80,6 +82,13 @@ io.on('connection', (socket) => {
             userArray[index].online = false;
             io.emit('users', userArray)
         }
+    });
+
+
+    app.get("/get_messages/:sender/:receiver" , function(req, result){
+        connection.query(`SELECT * FROM messages WHERE (sender="${req.params.sender}" AND receiver="${req.params.receiver}") OR (sender="${req.params.receiver}" AND receiver="${req.params.sender}")`, function(err, res){
+            result.send(res); 
+        });
     });
 
 });
