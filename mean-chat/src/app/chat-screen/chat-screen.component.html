@@ -1,0 +1,42 @@
+<p>chat-screen works!</p>
+
+<div class="container">
+    <div class="row pb-3">
+        <div class="col-md-4">
+            <input type="text" [(ngModel)]="username" placeholder="username" class="form-control">
+        </div>
+        <div class="col-md-4">
+            <input type="text" [(ngModel)]="room" placeholder="room" class="form-control">
+        </div>
+        <div class="col">
+            <button (click)="startRoom()" class="btn btn-primary">Start</button>
+        </div>
+        <div class="col">
+            <button (click)="leaveRoom()" class="btn btn-primary">Leave</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="card m-0 p-2  col-md-8">
+            <div *ngFor="let item of messageArray">
+                <span style="font-size: 13px;"> <strong>{{item.username}} : </strong>{{item.message}} </span>
+            </div>
+        </div>
+        <div class="card m-0 p-2 col-md-4">
+            <div *ngFor="let item of userArray">
+                <span style="font-size: 13px;"> <strong>{{item.username}} : </strong>{{item.id}} - 
+                    <span class="{{item.online == true ? 'Online' : 'Offline' }}">{{item.online == true ? 'Online' : 'Offline' }}</span>
+                 </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <input type="text" [(ngModel)]="chat" placeholder="Chat here" class="form-control">
+        </div>
+        <div class="col-md-4">
+            <button (click)="sendMessage()" class="btn btn-primary">Send</button>
+        </div>
+    </div>
+</div>
